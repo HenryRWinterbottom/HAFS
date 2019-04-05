@@ -3,7 +3,7 @@
 # Define top-level directory containing the configurations and scripts
 # for the experiment (e.g., the home-directory).
 
-export HOMEdir=/Users/hwinter/home/trunk/fv3sar_workflow
+export HOMEdir=/Users/hwinter/home/trunk/HAFS
 
 # Define the top-level directory within which to conduct the
 # experiment (e.g., the work directory/space); beneath this directory,

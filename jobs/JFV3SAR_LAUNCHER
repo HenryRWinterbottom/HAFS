@@ -4,7 +4,7 @@ set -x -e
 
 # HOMEdir defined within environment.
 
-. ${HOMEdir}/jobs/HAFS/JFV3SAR_ENVIR
+. ${HOMEdir}/jobs/JFV3SAR_ENVIR
 
 #######################################################################
 #

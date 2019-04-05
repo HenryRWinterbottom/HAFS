@@ -4,7 +4,7 @@ set -x
 
 # HOMEdir set in qsub job
 
-. $HOMEdir/jobs/HAFS/JFV3SAR_ENVIR
+. $HOMEdir/jobs/JFV3SAR_ENVIR
 . $WORKdir/${USER}/${CYCLE}/intercom/experiment.${CYCLE}
 
 #. /usrx/local/prod/lmod/lmod/init/ksh

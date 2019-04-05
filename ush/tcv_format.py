@@ -92,7 +92,8 @@ tcvlocs=['/scratch3/NCEPDEV/hwrf/noscrub/input/SYNDAT-PLUS',\
          '/hwrf/noscrub/input/SYNDAT-PLUS',\
          '/hwrf/noscrub/input/SYNDAT',\
          '/gpfs/gp1/nco/ops/com/arch/prod/syndat/',\
-         '/gpfs/tp1/nco/ops/com/arch/prod/syndat/']
+         '/gpfs/tp1/nco/ops/com/arch/prod/syndat/',\
+         '/Users/hwinter/noscrub/fv3sar_workflow/input-data/SYNDAT-PLUS']
 
 #----
 

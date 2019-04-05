@@ -18,6 +18,10 @@
 
 set -x -e
 
+# Define environment for respective experiment.
+
+. ${ROCOTOdir}/experiment.config
+
 #----
 
 # FUNCTION:
@@ -68,7 +72,7 @@ build_experiment_info (){
 
     # Append the user job environment file to external file.
 
-    grep . $HOMEdir/jobs/HAFS/JFV3SAR_ENVIR >> ${EXPTINFO_FILEPATH}
+    grep . $HOMEdir/jobs/JFV3SAR_ENVIR >> ${EXPTINFO_FILEPATH}
     grep . $PARMdir/configure.experiment >> ${EXPTINFO_FILEPATH}
 
     # Write environment variables to external file.
