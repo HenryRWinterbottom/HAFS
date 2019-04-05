@@ -219,7 +219,7 @@ def main():
     options=DateTimeOptions()
     opts_obj=options.run()
     datetimeattrbs=DateTimeAttributes(opts_obj=opts_obj)
-    datetime_obj=datetimeattrbs.run()
+    datetimeattrbs.run()
 
 #----
 
