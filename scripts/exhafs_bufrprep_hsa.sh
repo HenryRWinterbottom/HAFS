@@ -1,25 +1,107 @@
-#!/bin/ksh
+#!/bin/bash
 
 ################################################################################
-#
-# UNIX Script Documentation Block
-#
-# Script name:         exfv3sar_bufrprep_hsa.sh
-#
-# Script description:  This script generates a Binary Universal Format 
-#                      (BUFR) file containing the NOAA/AOML/HRD dropsondes and 
-#                      drift calculations to be appended to the 
-#                      data-assimilation PREPBUFR files.
-#
-# Script history log:  2019-03-21  Henry Winterbottom -- Original version.
-#
+#### UNIX Script Documentation Block
+##
+## Script name:         exhafs_bufrprep_hsa.sh
+##
+## Script description:  Create BUFR-formatted file for NOAA/AOML/HRD TEMP-DROP
+##                      observations.
+##
+## Author:              Henry R. Winterbottom 
+##
+## Date:                2019-03-21
+##
+## Abstract:            This script generates a Binary Universal Format 
+##                      (BUFR) file containing the NOAA/AOML/HRD dropsondes and 
+##                      drift calculations to be appended to the 
+##                      data-assimilation PREPBUFR files.
+##
+## Script history log:  
+##
+## 2019-03-21  Henry R. Winterbottom -- Original version.
+##
+## Usage: exhafs_bufrprep_hsa.sh
+##
+##   Imported Shell Variables:
+##
+##     BUFRPREPdir:      The top-level working directory for all BUFRPREP 
+##                       applications.
+##
+##     COMROOT:          The experiment top-level COM directory location.
+##
+##     CYCLE:            The forecast cycle; formatted as %Y%m%d%H.
+##
+##     FCSTtype:         The forecast type; either 'history' or 'realtime'; this
+##                       determines whether observations are collected from a
+##                       GNU-zipped tarball (history) or parsed from composite
+##                       sonde-type observation files (realtime).
+##
+##     HSAdatapath:      The user configuration-specified TEMP-DROP observation
+##                       files and/or archive location.
+##
+##     ITRCROOT:         The experiment top-level INTERCOM directory location.
+##
+##     USER:             The host machine user login name.
+##
+##     SCRIPTdir:        The top-level script directory location; set by 
+##                       jobs/JHAFS_ENVIR.
+##
+##     WORKdir:          The user configuration-specified top-level experiment 
+##                       working directory.
+##
+##   NOTE: All imported shell variables should be sourced from the
+##   environment defined for the respective experiment.
+##
+##   Exported Shell Variables:
+##
+##     ANALDATE:         The forecast cycle relative to which the observations 
+##                       are to be formatted within the PREPBUFR file.
+##
+##     BUFR_TBLPATH:     The path to the PREPBUFR table for the TEMP-DROP sonde
+##                       observations.
+##
+##     HSA_INTRP_OBSERR: A logical variable specifying whether to interpolate
+##                       the observation error profile.
+##
+##     HSA_OBS_FILEPATH: The path to the ascii-formatted file list containing 
+##                       the observations to be formatted within the PREPBUFR 
+##                       file.
+##
+##     HSA_OBSERR_FILEPATH: The path to the ascii-formatted TEMP-DROP observation 
+##                          errors file.
+##
+##     IS_HSA:           A logical variable specifying that the OBS-TO-BUFR 
+##                       software is to be applied for TEMP-DROP sonde
+##                       observations.
+##
+##     RUNPATH:          The directory within which the OBS-TO-BUFR software is
+##                       to be run; typically within the working directory 
+##                       (e.g., BUFRPREPdir).
+##
+##   Modules and files referenced:
+##
+##     scripts: ${SCRIPTdir}/exfv3sar_bufrprep_obstobufr.sh
+##
+## Remarks:
+##
+##   Condition codes:
+##
+##      0 - no problem encountered
+##     >0 - some problem encountered
+##
+## Attributes:
+##
+##   Language: POSIX shell
+##   Machine: IBM SP
+##
 ################################################################################
 
 set -x -e
 
 # Define environment for respective experiment.
 
-. ${WORKdir}/${USER}/${CYCLE}/intercom/experiment.${CYCLE}
+. ${WORKdir}/${CYCLE}/intercom/experiment.${CYCLE}
 
 #----
 
@@ -97,7 +179,7 @@ dump_tempdrop_history (){
 
 	# Unpack tarball in working directory.
 
-	tar -zxvf ${filename}
+	tar -xvf ${filename}
 
 	# Remove tarball within working directory
 
@@ -161,7 +243,7 @@ format_tempdrop_sonde (){
 
     # Remove any previous occurrances of external file list.
 
-    rm sonde.filelist
+    rm sonde.filelist 2> /dev/null || :
 
     # Loop through all file names and check for data non-usage flags.
 
@@ -170,19 +252,25 @@ format_tempdrop_sonde (){
 	# Check for strings in file contents; if the check is
 	# unsuccessful (e.g., returns '0'), process the file.
 
-	check=`grep -cE 'COMM CHECK|TTAA|TTBB' ${filename}`
-	if [ ${check} == 0 ]; then
+	if egrep -q "COMM CHECK|TTAA|TTBB" ${BUFRPREPdir}/tempdrop/obs/${filename}; then
+
+	    # Remove observation file.
+
+            rm ${BUFRPREPdir}/tempdrop/obs/${filename} 2> /dev/null || :
+
+	else # if egrep -q "COMM CHECK|TTAA|TTBB" 
+	     # ${BUFRPREPdir}/tempdrop/obs/${filename}
 
 	    # Create new file which will contain any modifications
 	    # made to the original observation file.
 
-	    cp ${filename} ${filename}.mod
+	    cp ${BUFRPREPdir}/tempdrop/obs/${filename} ${BUFRPREPdir}/tempdrop/${filename}.mod
 
 	    # Remove all meta-characters from strings in file; this
 	    # step is necessary as some of the archived files may have
 	    # been generated on a non-UNIX platform.	    
 
-            strip_meta ${filename}.mod
+            strip_meta ${BUFRPREPdir}/tempdrop/${filename}.mod
 
 	    # Define strings within file to seek out.
 
@@ -195,15 +283,16 @@ format_tempdrop_sonde (){
 		# Format observation time information for respective
 		# sonde.
 
-		prepend_string_newline ${filename}.mod ${srchstr}
+		prepend_string_newline ${BUFRPREPdir}/tempdrop/${filename}.mod ${srchstr}
 
 	    done # for srchstr in ${srchstrs}
 
 	    # Append file name to list of files to be processed.
 
-	    echo "'${BUFRPREPdir}/tempdrop/obs/${filename}.mod'" >> ${BUFRPREPdir}/tempdrop/sonde.filelist
+	    echo "'${BUFRPREPdir}/tempdrop/${filename}.mod'" >> ${BUFRPREPdir}/tempdrop/sonde.filelist
 		     
-	fi # if [ ${check} == 0 ]
+	fi   # if egrep -q "COMM CHECK|TTAA|TTBB" 
+             # ${BUFRPREPdir}/tempdrop/obs/${filename}
 
     done # for filename in ${filenames}
 }
@@ -288,7 +377,7 @@ run_obs_to_bufr (){
 
     # Create PREPBUFR-formatted file for TEMP-DROP sonde observations.
 
-    ${SCRIPTdir}/exfv3sar_bufrprep_obstobufr.sh
+    ${SCRIPTdir}/exhafs_bufrprep_obstobufr.sh
 }
 
 #----
@@ -419,7 +508,9 @@ run_obs_to_bufr
 
 deliver_products
 
+export ERR=$?
+export err=${ERR}
 stop_date=`date`
 echo "STOP ${script_name}: ${stop_date}"
 
-exit
+exit ${err}

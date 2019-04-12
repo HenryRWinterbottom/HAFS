@@ -1,18 +1,82 @@
 #!/bin/ksh
 
 ################################################################################
-#
-# UNIX Script Documentation Block
-#
-# Script name:         exfv3sar_bufrprep_givuvtdr.sh
-#
-# Script description:  This script generates a Binary Universal Format
-#                      (BUFR) file containing the NOAA/AOML/HRD G-IV
-#                      reconnaisance tail-Doppler radar (TDR) u- and
-#                      v-wind observations.
-#
-# Script history log:  2019-03-26  Henry Winterbottom -- Original version.
-#
+#### UNIX Script Documentation Block
+##
+## Script name:         exhafs_bufrprep_givuvtdr.sh
+##
+## Script description:  Create BUFR-formatted file for NOAA/AOML/HRD G-IV
+##                      observations.
+##
+## Author:              Henry R. Winterbottom 
+##
+## Date:                2019-03-26
+##
+## Abstract:            This script generates a Binary Universal Format
+##                      (BUFR) file containing the NOAA/AOML/HRD G-IV
+##                      reconnaisance tail-Doppler radar (TDR) u- and
+##                      v-wind observations.
+##
+## Script history log: 
+##
+## 2019-03-26  Henry R. Winterbottom -- Original version.
+##
+## Usage: exhafs_bufrprep_givtdruv.sh
+##
+##   Imported Shell Variables:
+##
+##     BUFRPREPdir:      The top-level working directory for all BUFRPREP 
+##                       applications.
+##
+##     COMROOT:          The experiment top-level COM directory location.
+##
+##     CYCLE:            The forecast cycle; formatted as %Y%m%d%H.
+##
+##     G4TDRUVdatapath:  The user configuration-specified GIV-TDR netcdf
+##                       observation file location. 
+##
+##     ITRCROOT:         The experiment top-level INTERCOM directory location.
+##
+##     USER:             The host machine user login name.
+##
+##     WORKdir:          The user configuration-specified top-level experiment 
+##                       working directory.
+##
+##   NOTE: All imported shell variables should be sourced from the
+##   environment defined for the respective experiment.
+##
+##   Exported Shell Variables:
+##
+##     ANALDATE:         The forecast cycle relative to which the observations 
+##                       are to be formatted within the PREPBUFR file.
+##
+##     BUFR_TBLPATH:     The path to the PREPBUFR table for the GIV-TDR u- and
+##                       v-wind observations.
+##
+##     IS_GIVTDRUV:      A logical variable specifying that the OBS-TO-BUFR 
+##                       software is to be applied for GIV-TDR u- and v-wind
+##                       observations.
+##
+##     RUNPATH:          The directory within which the OBS-TO-BUFR software is
+##                       to be run; typically within the working directory 
+##                       (e.g., BUFRPREPdir).
+##
+##   Modules and files referenced:
+##
+##     scripts: ${SCRIPTdir}/exfv3sar_bufrprep_obstobufr.sh
+##
+## Remarks:
+##
+##   Condition codes:
+##
+##      0 - no problem encountered
+##     >0 - some problem encountered
+##
+## Attributes:
+##
+##   Language: POSIX shell
+##   Machine: IBM SP
+##
 ################################################################################
 
 set -x
@@ -173,7 +237,9 @@ run_obs_to_bufr
 
 deliver_products
 
+export ERR=$?
+export err=${ERR}
 stop_date=`date`
 echo "STOP ${script_name}: ${stop_date}"
 
-exit
+exit ${err}

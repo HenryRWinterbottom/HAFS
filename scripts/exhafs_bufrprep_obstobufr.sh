@@ -1,24 +1,82 @@
 #!/bin/ksh
 
 ################################################################################
-#
-# UNIX Script Documentation Block
-#
-# Script name:         exfv3sar_bufrprep_obstobufr.sh
-#
-# Script description:  This script generates a Binary Universal Format
-#                      (BUFR) file in accordance with the user
-#                      environment variables.
-#
-# Script history log:  2019-03-26  Henry Winterbottom -- Original version.
-#
+#### UNIX Script Documentation Block
+##
+## Script name:         exhafs_bufrprep_obstobufr.sh
+##
+## Script description:  Creates PREPBUFR-formatted observation files.
+##
+## Author:              Henry R. Winterbottom 
+##
+## Date:                2019-03-26
+##
+## Abstract:            This script generates a Binary Universal Format
+##                      (BUFR) file in accordance with the user
+##                      environment variables.
+##
+## Script history log:  
+##
+## 2019-03-26  Henry Winterbottom -- Original version.
+##
+## Usage: exhafs_bufrprep_obstobufr.sh
+##
+##   Imported Shell Variables:
+##
+##     ANALDATE:         The forecast cycle relative to which the observations 
+##                       are to be formatted within the PREPBUFR file.
+##
+##     BUFR_TBLPATH:     The path to the PREPBUFR table for the TEMP-DROP sonde
+##                       observations.
+##
+##     CYCLE:            The forecast cycle; formatted as %Y%m%d%H.
+##
+##     HSA_INTRP_OBSERR: A logical variable specifying whether to interpolate
+##                       the observation error profile.
+##
+##     HSA_OBS_FILEPATH: The path to the ascii-formatted file list containing 
+##                       the observations to be formatted within the PREPBUFR 
+##                       file.
+##
+##     HSA_OBSERR_FILEPATH: The path to the ascii-formatted TEMP-DROP observation 
+##                          errors file.
+##
+##     IS_GIVTDRUV:      A logical variable specifying that the OBS-TO-BUFR 
+##                       software is to be applied for GIV-TDR u- and v-wind
+##                       observations.
+##
+##     IS_HSA:           A logical variable specifying that the OBS-TO-BUFR 
+##                       software is to be applied for TEMP-DROP sonde
+##                       observations.
+##
+##     RUNPATH:          The directory within which the OBS-TO-BUFR software is
+##                       to be run; typically within the working directory 
+##                       (e.g., BUFRPREPdir).
+##
+##     USER:             The host machine user login name.
+##
+##     WORKdir:          The user configuration-specified top-level experiment 
+##                       working directory.
+##
+## Remarks:
+##
+##   Condition codes:
+##
+##      0 - no problem encountered
+##     >0 - some problem encountered
+##
+## Attributes:
+##
+##   Language: POSIX shell
+##   Machine: IBM SP
+##
 ################################################################################
 
 set -x -e
 
 # Define environment for respective experiment.
 
-. ${WORKdir}/${USER}/${CYCLE}/intercom/experiment.${CYCLE}
+. ${WORKdir}/${CYCLE}/intercom/experiment.${CYCLE}
 
 #----
 
@@ -197,9 +255,11 @@ create_obs_to_bufr_namelist
 
 run_obs_to_bufr
 
+export ERR=$?
+export err=${ERR}
 stop_date=`date`
 echo "STOP ${script_name}: ${stop_date}"
 
-exit
+exit ${err}
 
 

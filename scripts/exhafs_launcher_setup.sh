@@ -72,7 +72,7 @@ build_experiment_info (){
 
     # Append the user job environment file to external file.
 
-    grep . $HOMEdir/jobs/JFV3SAR_ENVIR >> ${EXPTINFO_FILEPATH}
+    grep . $HOMEdir/jobs/JHAFS_ENVIR >> ${EXPTINFO_FILEPATH}
     grep . $PARMdir/configure.experiment >> ${EXPTINFO_FILEPATH}
 
     # Write environment variables to external file.
@@ -194,7 +194,9 @@ build_experiment_info
 
 deliver_products
 
+export ERR=$?
+export err=${ERR}
 stop_date=`date`
 echo "STOP ${script_name}: ${stop_date}"
 
-exit
+exit ${err}
