@@ -1,7 +1,7 @@
-<task name="bufrprep_FV3SAR_HAFS" maxtries="99">
+<task name="bufrprep_HAFS" maxtries="99">
 
-      <command>bash &PRE; &PYTHON; bash ${JOBSdir}/JFV3SAR_BUFRPREP</command>
-      <jobname>fv3sar_hafs_bufrprep</jobname>
+      <command>bash &PRE; bash ${JOBSdir}/JHAFS_BUFRPREP</command>
+      <jobname>hafs_bufrprep</jobname>
       <queue>&QUEUE;</queue>
       <account>&ACCOUNT;</account>
       <cores>1</cores>
@@ -16,7 +16,7 @@
       </envar>
 
       <dependency>
-          <taskdep task="launch_FV3SAR_HAFS"/>    
+          <taskdep task="launch_HAFS"/>    
       </dependency>
 
 </task>

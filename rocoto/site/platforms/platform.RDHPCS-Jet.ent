@@ -1,9 +1,9 @@
 <!ENTITY SCHEDULER       "slurm">
-<!ENTITY QUEUE           "normal">
+<!ENTITY QUEUE           "batch">
 <!ENTITY ACCOUNT         "hwrfv3">
-<!ENTITY SERIAL          "normal">
-<!ENTITY PE              "normal">
-<!ENTITY PAR_SHARED      "normal">
+<!ENTITY SERIAL          "batch">
+<!ENTITY PE              "novel">
+<!ENTITY PAR_SHARED      "novel">
 <!ENTITY RESERVATION     "">
 <!ENTITY SERIAL_EXTRA    "<native>-p ujet</native>">
 <!ENTITY CORES_EXTRA     "<native>-p ujet</native>">
@@ -12,6 +12,6 @@
 <!ENTITY NODES_EXTRA     "<native>-p ujet</native>">
 <!ENTITY PURE_OPENMP     "<nodes>1:ppn=2:tpp=8</nodes><native>-p xjet</native>">
 <!ENTITY MPI_EXTRA       "">
-<!ENTITY SERVICE_QUEUE   "windfall">
+<!ENTITY SERVICE_QUEUE   "novel">
 <!ENTITY SERVICE_EXTRA   "<native>-p ujet</native>">
 <!ENTITY ULIMIT          "">

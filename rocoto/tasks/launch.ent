@@ -1,7 +1,7 @@
-<task name="launch_FV3SAR_HAFS" maxtries="99">
+<task name="launch_HAFS" maxtries="99">
 
-      <command>bash &PRE;; bash ${JOBSdir}/JFV3SAR_LAUNCHER</command>
-      <jobname>fv3sar_hafs_launch</jobname>
+      <command>bash &PRE;; bash ${JOBSdir}/JHAFS_LAUNCHER</command>
+      <jobname>hafs_launch</jobname>
       <queue>&QUEUE;</queue>
       <account>&ACCOUNT;</account>
       <cores>1</cores>

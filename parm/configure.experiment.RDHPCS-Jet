@@ -25,7 +25,7 @@ export PREPBUFRgivtdruv=0 # -- Process NOAA/AOML/HRD G-IV tail-Doppler
 
 # PREBUFR HSA (e.g., TEMP-DROP) options
 
-export HSAdatapath=/mnt/lfs3/projects/hwrf-data/hwrf-input/EXPERIMENTAL/TEMPDROP/2017090100/${CYCLE}
+export HSAdatapath=/mnt/lfs3/projects/hwrf-data/hwrf-input/EXPERIMENTAL/TEMPDROP/${CYCLE}
 export HSAoffset_seconds=10800
 export HSAsrchstrs=UZNT,UZPN,UZPA
 export HSAprepbufrtbl_filepath=${PARMdir}/bufrprep/prepobs_prep.bufrtable
@@ -45,10 +45,10 @@ export G4TDRUVprepbufrtbl_filepath=${PARMdir}/bufrprep/prepobs_prep.bufrtable
 
 # Define executable to create PREPBUFR-formatted files.
 
-export otb_exe=${EXECdir}/hafs_obstobufr.exe
+export otb_exe=${EXECdir}/hafs_obstobufr.x
 
 # Define executable to format TEMP-DROP sonde observation files.
 
-export tds_exe=${EXECdir}/hafs_tempdrop.exe
+export tds_exe=${EXECdir}/hafs_tempdrop_sonde.x
 
 

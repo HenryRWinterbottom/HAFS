@@ -42,7 +42,9 @@ _rdhpcs_jet_workflow (){
     # Define the path to the script containing the prerequisite
     # modules and environment variables for the workflow.
 
-    export PREREQSscript=${HOMEdir}/util/rtf/rtf.RDHPCS-Jet.sh
+    export PREREQSscript=${ROCOTOdir}/rtf/hafs_run_time.sh.inc.RDHPCS-jet
+
+#rtf.RDHPCS-Jet.sh
 
 }
 
