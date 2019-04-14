@@ -37,8 +37,8 @@ build_experiment (){
 
     # Define local variables
 
-    export COMROOT=${WORKdir}/${USER}/${EXPTname}/com/${CYCLE}
-    export EXPTROOT=${WORKdir}/${USER}/${EXPTname}/${CYCLE}
+    export COMROOT=${WORKdir}/com/${CYCLE}
+    export EXPTROOT=${WORKdir}/${CYCLE}
     export ITRCROOT=${EXPTROOT}/intercom
 
     # Create local sub-directories

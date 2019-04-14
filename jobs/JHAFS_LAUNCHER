@@ -6,6 +6,8 @@ set -x -e
 
 . ${HOMEdir}/jobs/JHAFS_ENVIR
 
+export MODULES=${PREREQSscript}
+
 #######################################################################
 #
 # Prepare for the user experiment; launch the following tasks:

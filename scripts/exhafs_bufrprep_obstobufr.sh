@@ -31,6 +31,9 @@
 ##
 ##     CYCLE:            The forecast cycle; formatted as %Y%m%d%H.
 ##
+##     EXPTROOT:         The user configuration-specified top-level experiment 
+##                       working directory.
+##
 ##     HSA_INTRP_OBSERR: A logical variable specifying whether to interpolate
 ##                       the observation error profile.
 ##
@@ -52,11 +55,6 @@
 ##     RUNPATH:          The directory within which the OBS-TO-BUFR software is
 ##                       to be run; typically within the working directory 
 ##                       (e.g., BUFRPREPdir).
-##
-##     USER:             The host machine user login name.
-##
-##     WORKdir:          The user configuration-specified top-level experiment 
-##                       working directory.
 ##
 ## Remarks:
 ##
@@ -242,6 +240,8 @@ run_obs_to_bufr (){
 script_name=`basename "$0"`
 start_date=`date`
 echo "START ${script_name}: ${start_date}"
+
+. ${MODULES}
 
 # The following tasks are accomplished by this script:
 

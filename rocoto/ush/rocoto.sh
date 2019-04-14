@@ -43,9 +43,6 @@ _rdhpcs_jet_workflow (){
     # modules and environment variables for the workflow.
 
     export PREREQSscript=${ROCOTOdir}/rtf/hafs_run_time.sh.inc.RDHPCS-jet
-
-#rtf.RDHPCS-Jet.sh
-
 }
 
 #----
@@ -209,7 +206,7 @@ define_logger (){
 
     # Define path for Rocoto log files.
 
-    logpath=${WORKdir}/${USER}/${EXPTname}/log
+    logpath=${WORKdir}/log
 
     # Create directory for Rocoto log files.
 

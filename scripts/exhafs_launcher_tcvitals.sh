@@ -20,7 +20,7 @@ set -x -e
 
 # Define environment for respective experiment.
 
-. ${WORKdir}/${USER}/${EXPTname}/${CYCLE}/intercom/experiment.${CYCLE}
+. ${WORKdir}/${CYCLE}/intercom/experiment.${CYCLE}
 
 #----
 

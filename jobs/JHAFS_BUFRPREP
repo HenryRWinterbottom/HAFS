@@ -7,12 +7,7 @@ set -x
 . $HOMEdir/jobs/JHAFS_ENVIR
 . $WORKdir/${CYCLE}/intercom/experiment.${CYCLE}
 
-#. /usrx/local/prod/lmod/lmod/init/ksh
-#module purge
-#module use ${HOMEgfs}/sorc/fv3gfs.fd/modulefiles/wcoss_dell_p3
-#module load fv3
-#module load prod_util/1.1.0
-#module list
+export MODULES=${PREREQSscript}
 
 #######################################################################
 #

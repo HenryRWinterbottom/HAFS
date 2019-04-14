@@ -5,16 +5,16 @@
 
 export HOMEdir=/mnt/lfs3/projects/hwrfv3/Henry.Winterbottom/HAFS
 
+# Define a unique name for the experiment.
+
+export EXPTname=HAFS_DEMO
+
 # Define the top-level directory within which to conduct the
 # experiment (e.g., the work directory/space); beneath this directory,
 # a subdirectory for the user specified experiment name (see EXPTname)
 # and all forecast cycles will be created.
 
-export WORKdir=/mnt/lfs1/projects/hwrfv3
-
-# Define a unique name for the experiment.
-
-export EXPTname=HAFS_DEMO
+export WORKdir=/mnt/lfs1/projects/hwrfv3/${USER}/${EXPTname}
 
 # Define the forecast type; options are 'history' or 'realtime'.
 

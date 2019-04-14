@@ -32,6 +32,8 @@
 ##
 ##     CYCLE:            The forecast cycle; formatted as %Y%m%d%H.
 ##
+##     EXPTROOT:         The user configuration-specified top-level experiment 
+##                       working directory.
 ##     FCSTtype:         The forecast type; either 'history' or 'realtime'; this
 ##                       determines whether observations are collected from a
 ##                       GNU-zipped tarball (history) or parsed from composite
@@ -46,9 +48,6 @@
 ##
 ##     SCRIPTdir:        The top-level script directory location; set by 
 ##                       jobs/JHAFS_ENVIR.
-##
-##     WORKdir:          The user configuration-specified top-level experiment 
-##                       working directory.
 ##
 ##   NOTE: All imported shell variables should be sourced from the
 ##   environment defined for the respective experiment.
@@ -470,6 +469,8 @@ strip_meta (){
 script_name=`basename "$0"`
 start_date=`date`
 echo "START ${script_name}: ${start_date}"
+
+. ${MODULES}
 
 # The following tasks are accomplished by this script:
 

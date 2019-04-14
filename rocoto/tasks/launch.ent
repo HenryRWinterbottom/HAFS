@@ -1,6 +1,6 @@
 <task name="launch_HAFS" maxtries="99">
 
-      <command>bash &PRE;; bash ${JOBSdir}/JHAFS_LAUNCHER</command>
+      <command>bash ${JOBSdir}/JHAFS_LAUNCHER</command>
       <jobname>hafs_launch</jobname>
       <queue>&QUEUE;</queue>
       <account>&ACCOUNT;</account>
@@ -12,6 +12,10 @@
       <envar>
         <name>CYCLE</name>
 	<value><cyclestr>@Y@m@d@H</cyclestr></value>
+      </envar>
+      <envar>
+         <name>PREREQSscript</name>
+         <value>&PRE;</value>
       </envar>
 
 </task>
